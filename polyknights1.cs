@@ -39,7 +39,7 @@ private bool ROTAinhand = false;
       public const int REFusion = 6172122
       public const int FeatherDuster = 18144506
       public const int ROTA = 32807846
-      public const int TerraForming = 73628505
+      public const int Terraforming = 73628505
       public const int Invocation = 74063034
       public const int Foolish = 81439173
       public const int TwinTwisters = 43898403
@@ -61,7 +61,7 @@ private bool ROTAinhand = false;
       public const int BreakSword =  62709239
       public const int Rusty = 26692769
       public const int Cherubini = 58699500
-      public const int Verde = 70369116
+      public const int Verte = 70369116
       public const int SecureGardna = 2220237
       public const int Almiraj = 60303245
      
@@ -154,3 +154,53 @@ private bool wasBootsActivatedThisTurn = false;
 private bool wasRaggedGlovesActivatedThisTurn = false;
 private bool ScorpioActivatedThisTurn = false;
 
+public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
+    {
+    AddExecutor(ExecutorType.Activate, CardId.TornScales, TornScales_activate, GY_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Boots, Hand_act_eff, GY_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.StainedGreaves. Hand_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Scorpio, Scorpio_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Lonefire, lonfire_activate);
+    AddExecutor(ExecutorType.Activate, CardId.AncientCloak, AncientCloak_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.RaggedGloves, GY_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.DarkMagician);
+    AddExecutor(ExecutorType.Activate, CardId.RedEyes);
+    AddExecutor(ExecutorType.Activate, CardId.Alesiter, Aleister_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Scorpio, Scorpio_activate);
+    AddExecutor(ExecutorType.Activate, CardId.DarlingtonCobra, DarlingtonCobra_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Ashblossom, Hand_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.REFusion,  REFusion_activate);
+    AddExecutor(ExecutorType.Activate, CardId.FeatherDuster, HarpieFeatherDuster);
+    AddExecutor(ExecutorType.Activate, CardId.ROTA, ROTA_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Terraforming, Terraforming_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Invocation, Invocation_activate, GY_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Foolish, Foolish_activate);
+    AddExecutor(ExecutorType.Activate, CardId.TwinTwisters, TwinTwisters_activate);
+    AddExecutor(ExecutorType.Activate, CardId.SuperPoly, Superpoly_activate);
+    AddExecutor(ExecutorType.Activate, CardId.PKRankUpMagic, PKRankUpMagic_activate);
+    AddExecutor(ExecutorType.Activate, CardId.MagicalMeltdown, MagicalMeltdown_activate);
+    AddExecutor(ExecutorType.Activate, CardId.PKWing, PKWing_activate);
+    AddExecutor(ExecutorType.Activate, CardId.FogBlade, FogBlade_activate, GY_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Triphy, Triphy_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Mechaba, Mechaba_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Dragoon, Dragoon_Activate);
+    AddExecutor(ExecutorType.Activate, CardId.StarvingVenom, StaringVenom_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Purgatrio, Purgatrio_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Zeus, Zeus_activate, Zeus_eff_act);
+    AddExecutor(ExecutorType.Activate, CardId.RaidersKnight, RaidersKnight_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Breaksword, Breaksword_activate, GY_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Rusty, Rusty_activate, Rusty_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Cherubini, Cherubini_activate, Cherubini_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Verte, Verte_activate);
+    AddExecutor(ExecutorType.Activate, CardId.SecureGardna, SecureGardna_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Almiraj, Almiraj_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Lancea, Hand_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.GateBlocker);
+    AddExecutor(ExecutorType.Activate, CardId.Droll, Hand_eff_act);
+    AddExecutor(ExecutorType.Activate, CardId.DRNM, DRNM-activate);
+    AddExecutor(ExecutorType.Activate, CardId.SolemStrike, solemnStrike_activate);
+
+    AddExecutor(ExecutorType.Repos, DefaultMonsterRepos);
+    AddExecutor(ExecutorType.SpellSet, SpellSet);
+
+}
