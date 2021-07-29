@@ -156,22 +156,25 @@ private bool ScorpioActivatedThisTurn = false;
 
 public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     {
+    AddExecuotr(ExecutorType.Summon, CardId.Tornscales)
     AddExecutor(ExecutorType.Activate, CardId.TornScales, TornScales_activate, GY_act_eff);
-    AddExecutor(ExecutorType.Activate, CardId.Boots, GY_act_eff);
     Addexecutor(ExecutorTyoe.SpSummon, CardId.Boots, BootsSummon);
-    AddExecutor(ExecutorType.Activate, CardId.StainedGreaves. Hand_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Boots, GY_act_eff);
+    AddExecutor(ExecutorType.SPSummon, CardId.StainedGreaves. StainedGreavesSummon);
     AddExecutor(ExecutorType.Activate, CardId.Scorpio, Scorpio_activate);
-    AddExecutor(executorType.SpSummon, CardId.ScorpioSummon)
-    AddExecutor(ExecutorType.Activate, CardId.Lonefire, lonfire_activate);
+    AddExecutor(executorType.SpSummon, CardId.ScorpioSummon);
+    AddExecutor(ExecutoeType.Summon, CardId.LoneFire);
+    AddExecutor(ExecutorType.Activate, CardId.Lonefire, Lonefire_activate);
+    AddExecutor(ExecutorType.Summon, CardId.AncientCloak);
     AddExecutor(ExecutorType.Activate, CardId.AncientCloak, AncientCloak_act_eff, GY_act_eff);
-    AddExecutor(ExecutorTyoe.Summon, CardId.AncientCloak);
+    Addexecutor(ExecutorTypeS.Summon Card.Id RaggedGloves);
     AddExecutor(ExecutorType.Activate, CardId.RaggedGloves, GY_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.DarkMagician);
     AddExecutor(ExecutorType.Activate, CardId.RedEyes);
     AddExecutor(ExecutorType.Summon, CardId.Aleister);
-    AddExecutor(ExecutorType.Activate, CardId.Alesiter, AleisterEffect);   
-    AddExecutor(ExecutorType.Activate, CardId.DarlingtonCobra, DarlingtonCobra_activate);
+    AddExecutor(ExecutorType.Activate, CardId.Alesiter, AleisterEffect);
     AddExecutor(ExecutorType.Summon, CardId DarlingtonCobra);
+    AddExecutor(ExecutorType.Activate, CardId.DarlingtonCobra, DarlingtonCobra_activate);
     AddExecutor(ExecutorType.Activate, CardId.Ashblossom, Hand_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.REFusion,  REFusion_activate);
     AddExecutor(ExecutorType.Activate, CardId.FeatherDuster, HarpieFeatherDuster);
@@ -210,7 +213,7 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
 }
 public override bool OnSelectHand()
 {
-    //go first
+    //dont choose to go first
     return false;
 
 }
