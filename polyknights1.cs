@@ -8,7 +8,7 @@ using System.Linq;
         DecksManager.AddDeckType("PolyKnights", DuelRules.MasterDuel, (ai, duel) => new PolyKnightsExecutor(ai, duel),
                   "s+Gf02rCtK6mmEVfUokVho3NpZhguE3EnfWM7Fpm0xtnwXjxo2RWGNZc38oIwyuePmOCYakr2nC8XvkeAwjf0o1j+HVHhHHZ7C+MkdXJLLtksliOrrzFonxtLhMMx2beg2PXcjfW/Z3XmUC45uNd1k/7WxlhWGbJIZbYEzUsqwQdmR6fL2FadnY3w3TFFFaBk1eYT2tuZ/x+dw8zCC/0mc74Zl09c8x+Q5azDxQZetVnMK99xMUEw/sWVjPA8N/OOawwrDbBiRmGb0/NZoJhUFgBAA==");
      }
-    public class CardId
+public class CardId
 private bool TornscalesinGY = false;
 private bool Rustyposition = 6 = false;
 private bool wasTornScalesSummonedThisTurn = false;
@@ -124,7 +124,7 @@ private readonly List<int> PolyKnights_combopieces = new List<int>
             CardId.FogBlade,
             CardId.BreakSword,
             CardId.RaidersKnight,
-            CardId. ArcRebellion
+            CardId.ArcRebellion
         };
 private readonly List<int> RustyMaterials = new List<int>
         {
@@ -137,7 +137,7 @@ private readonly List<int> RustyMaterials = new List<int>
             CardId.Lonefire,
             CardId.StainedGreaves,
             CardId.DarlingtonCobra,
-            CardId. Almiraj,
+            CardId.Almiraj,
             CardId.Scorpio,
             CardId.Aleister,
 
@@ -157,17 +157,21 @@ private bool ScorpioActivatedThisTurn = false;
 public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     {
     AddExecutor(ExecutorType.Activate, CardId.TornScales, TornScales_activate, GY_act_eff);
-    AddExecutor(ExecutorType.Activate, CardId.Boots, Hand_act_eff, GY_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Boots, GY_act_eff);
+    Addexecutor(ExecutorTyoe.SpSummon, CardId.Boots, BootsSummon);
     AddExecutor(ExecutorType.Activate, CardId.StainedGreaves. Hand_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.Scorpio, Scorpio_activate);
+    AddExecutor(executorType.SpSummon, CardId.ScorpioSummon)
     AddExecutor(ExecutorType.Activate, CardId.Lonefire, lonfire_activate);
-    AddExecutor(ExecutorType.Activate, CardId.AncientCloak, AncientCloak_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.AncientCloak, AncientCloak_act_eff, GY_act_eff);
+    AddExecutor(ExecutorTyoe.Summon, CardId.AncientCloak);
     AddExecutor(ExecutorType.Activate, CardId.RaggedGloves, GY_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.DarkMagician);
     AddExecutor(ExecutorType.Activate, CardId.RedEyes);
-    AddExecutor(ExecutorType.Activate, CardId.Alesiter, Aleister_activate);
-    AddExecutor(ExecutorType.Activate, CardId.Scorpio, Scorpio_activate);
+    AddExecutor(ExecutorType.Summon, CardId.Aleister);
+    AddExecutor(ExecutorType.Activate, CardId.Alesiter, AleisterEffect);   
     AddExecutor(ExecutorType.Activate, CardId.DarlingtonCobra, DarlingtonCobra_activate);
+    AddExecutor(ExecutorType.Summon, CardId DarlingtonCobra);
     AddExecutor(ExecutorType.Activate, CardId.Ashblossom, Hand_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.REFusion,  REFusion_activate);
     AddExecutor(ExecutorType.Activate, CardId.FeatherDuster, HarpieFeatherDuster);
@@ -204,3 +208,157 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     AddExecutor(ExecutorType.SpellSet, SpellSet);
 
 }
+public override bool OnSelectHand()
+{
+    //go first
+    return false;
+
+}
+
+public override bool OnPreBattleBetween(BotClientCard attacker, BotClientCard defender)
+{
+    if (!defender.IsMonsterHasPreventActivationEffectInBattle())
+    {
+        if (attacker.HasType(CardType.Fusion) && Bot.HasInHand(CardId.Aleister))
+        {
+            attacker.RealPower = attacker.RealPower + 1000;
+        }
+    }
+    return base.OnPreBattleBetween(attacker, defender);
+
+    private bool AleisterEffect()
+    {
+        if (DynamicCard.Location == CardLocation.Hand)
+        {
+            if (!(BotDuel.Phase == DuelPhase.BattleStep
+                || BotDuel.Phase == DuelPhase.BattleStart
+                || BotDuel.Phase == DuelPhase.Damage))
+            {
+                return false;
+            }
+
+            return BotDuel.Player == 0
+                || Util.IsOneEnemyBetter();
+        }
+        return true;
+    }
+
+    private bool InvocationEffect()
+    {
+        if (DynamicCard.Location == CardLocation.Grave)
+        {
+            return true;
+        }
+
+        IList<BotClientCard> materials0 = Bot.Graveyard;
+        IList<BotClientCard> materials1 = Enemy.Graveyard;
+        IList<BotClientCard> mats = new List<BotClientCard>();
+        BotClientCard aleister = GetAleisterInGrave();
+        if (aleister != null)
+        {
+            mats.Add(aleister);
+        }
+        BotClientCard mat = null;
+        foreach (BotClientCard card in materials0)
+        {
+            if (card.HasAttribute(CardAttribute.Light))
+            {
+                mat = card;
+                break;
+            }
+        }
+        foreach (BotClientCard card in materials1)
+        {
+            if (card.HasAttribute(CardAttribute.Light))
+            {
+                mat = card;
+                break;
+            }
+        }
+        if (mat != null)
+        {
+            mats.Add(mat);
+            AI.SelectCard(CardId.Mechaba);
+            AI.SelectMaterials(mats);
+            AI.SelectPosition(CardPosition.FaceUpAttack);
+            return true;
+        }
+        foreach (BotClientCard card in materials0)
+        {
+            if (card.HasAttribute(CardAttribute.Fire))
+            {
+                mat = card;
+                break;
+            }
+        }
+        foreach (BotClientCard card in materials1)
+        {
+            if (card.HasAttribute(CardAttribute.Fire))
+            {
+                mat = card;
+                break;
+            }
+        }
+        if (mat != null)
+        {
+            mats.Add(mat);
+            AI.SelectCard(CardId.Purgatrio);
+            AI.SelectMaterials(mats);
+            AI.SelectPosition(CardPosition.FaceUpAttack);
+            return true;
+        }
+        return false;
+    }
+
+    private BotClientCard GetAleisterInGrave()
+    {
+        foreach (BotClientCard card in Enemy.Graveyard)
+        {
+            if (card.IsCode(CardId.Aleister))
+            {
+                return card;
+            }
+        }
+        foreach (BotClientCard card in Bot.Graveyard)
+        {
+            if (card.IsCode(CardId.Aleister))
+            {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public int get_Cherbuini_linkzone()
+{
+    BotClientCard CherbuniniInExtra = Bot.GetMonstersInExtraZone().Where(x => x.Id == CardId.Cherubini).ToList().FirstOrDefault(x->x.Id == CardId.Cherubini);
+    if (CherbuniniInExtra !=null)
+    {
+        int zone = CherubiniInExtra.Position;
+        {
+            return 1;
+        }
+        if (zone == 6)
+        {
+            return 3;
+        }
+    }
+    return -1;
+
+}
+
+public int get_Rusty_linkzone()
+{
+    int xone = RustyInExtra.Position;
+        {
+        return 1;
+        }
+    if (get_Rusty_linkzone ==6)
+    {
+        return 3;
+
+    }
+    return -1;
+
+}
+
