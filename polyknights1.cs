@@ -156,7 +156,7 @@ private bool ScorpioActivatedThisTurn = false;
 
 public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     {
-    AddExecuotr(ExecutorType.Summon, CardId.Tornscales)
+    AddExecutor(ExecutorType.Summon, CardId.Tornscales)
     AddExecutor(ExecutorType.Activate, CardId.TornScales, TornScales_activate, GY_act_eff);
     Addexecutor(ExecutorTyoe.SpSummon, CardId.Boots, BootsSummon);
     AddExecutor(ExecutorType.Activate, CardId.Boots, GY_act_eff);
@@ -195,8 +195,11 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     AddExecutor(ExecutorType.Activate, CardId.Purgatrio, Purgatrio_activate);
     AddExecutor(ExecutorType.Activate, CardId.Zeus, Zeus_activate, Zeus_eff_act);
     AddExecutor(ExecutorType.Activate, CardId.RaidersKnight, RaidersKnight_activate);
-    AddExecutor(ExecutorType.Activate, CardId.Breaksword, Breaksword_activate, GY_act_eff);
+    AddExecutor(ExecutorTpe.SpSummon, CardId.BreakSword, BreakSwordXYZsummon);
+    AddExecutor(ExecutorType.Activate, CardId.BreakSword, Breaksword_activate, GY_act_eff);
+    AddExecutor(ExecutorType.SPSummon, CardId Rusty, RustySummon);
     AddExecutor(ExecutorType.Activate, CardId.Rusty, Rusty_activate, Rusty_act_eff);
+    AddExecutor(ExecutorType.SPSummon, CardId.Cherubini, CherubiniSummon);
     AddExecutor(ExecutorType.Activate, CardId.Cherubini, Cherubini_activate, Cherubini_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.Verte, Verte_activate);
     AddExecutor(ExecutorType.Activate, CardId.SecureGardna, SecureGardna_activate);
@@ -209,6 +212,7 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
 
     AddExecutor(ExecutorType.Repos, DefaultMonsterRepos);
     AddExecutor(ExecutorType.SpellSet, SpellSet);
+    AddExecutor(ExecutorType, TrapSet, TrapSet);
 
 }
 public override bool OnSelectHand()
@@ -365,3 +369,5 @@ public int get_Rusty_linkzone()
 
 }
 
+    private bool BreakSwordSummon()
+    
