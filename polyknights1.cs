@@ -186,13 +186,14 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     AddExecutor(ExecutorType.Activate, CardId.SuperPoly, Superpoly_activate);
     AddExecutor(ExecutorType.Activate, CardId.PKRankUpMagic, PKRankUpMagic_activate);
     AddExecutor(ExecutorType.Activate, CardId.MagicalMeltdown, MagicalMeltdown_activate);
-    AddExecutor(ExecutorType.Activate, CardId.PKWing, PKWing_activate);
+    AddExecutor(ExecutorType.Activate, CardId.PKWing, PKWing_Trap_activate, PKWing_GYActivate);
     AddExecutor(ExecutorType.Activate, CardId.FogBlade, FogBlade_activate, GY_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.Triphy, Triphy_activate);
     AddExecutor(ExecutorType.Activate, CardId.Mechaba, Mechaba_activate);
     AddExecutor(ExecutorType.Activate, CardId.Dragoon, Dragoon_Activate);
     AddExecutor(ExecutorType.Activate, CardId.StarvingVenom, StaringVenom_activate);
     AddExecutor(ExecutorType.Activate, CardId.Purgatrio, Purgatrio_activate);
+    AddExecutor(ExecutorTpe.SpSummon, CardId.Zeus, Zeus_SPSummon);
     AddExecutor(ExecutorType.Activate, CardId.Zeus, Zeus_activate, Zeus_eff_act);
     AddExecutor(ExecutorType.Activate, CardId.RaidersKnight, RaidersKnight_activate);
     AddExecutor(ExecutorTpe.SpSummon, CardId.BreakSword, BreakSwordXYZsummon);
@@ -201,6 +202,7 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     AddExecutor(ExecutorType.Activate, CardId.Rusty, Rusty_activate, Rusty_act_eff);
     AddExecutor(ExecutorType.SPSummon, CardId.Cherubini, CherubiniSummon);
     AddExecutor(ExecutorType.Activate, CardId.Cherubini, Cherubini_activate, Cherubini_act_eff);
+    AddExecutor(ExecutorTyoe, SpSummon, CardId.Verte, Verte_SPSummon);
     AddExecutor(ExecutorType.Activate, CardId.Verte, Verte_activate);
     AddExecutor(ExecutorType.Activate, CardId.SecureGardna, SecureGardna_activate);
     AddExecutor(ExecutorType.Activate, CardId.Almiraj, Almiraj_activate);
@@ -336,38 +338,25 @@ public override bool OnPreBattleBetween(BotClientCard attacker, BotClientCard de
         return null;
     }
 
-    public int get_Cherbuini_linkzone()
-{
-    BotClientCard CherbuniniInExtra = Bot.GetMonstersInExtraZone().Where(x => x.Id == CardId.Cherubini).ToList().FirstOrDefault(x->x.Id == CardId.Cherubini);
-    if (CherbuniniInExtra !=null)
-    {
-        int zone = CherubiniInExtra.Position;
-        {
-            return 1;
-        }
-        if (zone == 6)
-        {
-            return 3;
-        }
-    }
-    return -1;
 
+public override IList<BotClientCard> OnSelectXyzMaterial(IList<BotClientCard> cards, int min, int max)
+{
+    IList<BotCLientCard> result = Util.SelectPreferredCards(new[] {
+        CardId.Tornscales,
+        CardId.RaggedGloves,
+        CardId.AncientCloak,
+        CardId.Scorpio,
+        CardId.DarlingtonCobra,
+        CardId.StainedGreaves,
+        CardId.Lonefire,
+        CardId.Ashblossom,
+    }, cards, min, max);
+    return Util.CheckSelectCount(result, cards, min, max);
 }
 
-public int get_Rusty_linkzone()
+private bool NormalSummon()
 {
-    int xone = RustyInExtra.Position;
-        {
-        return 1;
-        }
-    if (get_Rusty_linkzone ==6)
-    {
-        return 3;
-
-    }
-    return -1;
-
+    NormalSummoned = true;
+    return true;
 }
 
-    private bool BreakSwordSummon()
-    
