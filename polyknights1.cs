@@ -10,7 +10,6 @@ using System.Linq;
      }
 public class CardId
 private bool TornscalesinGY = false;
-private bool Rustyposition = 6 = false;
 private bool wasTornScalesSummonedThisTurn = false;
 private bool TornscalesHitGY = false;
 private bool RaggedGlovesHitGY = false;
@@ -115,9 +114,10 @@ private readonly List<int> TornscalesTargets = new List<int>
             CardId.Boots,
             CardId.StainedGreaves
         };
-private readonly List<int> PolyKnights_combopieces = new List<int>
+private readonly List<int> PK_combo = new List<int>
         {
             CardId.TornScales,
+            CardId.AncientCloak,
             CardId.Boots,
             CardId.RaggedGloves,
             CardId.StainedGreaves,
@@ -167,13 +167,13 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     AddExecutor(ExecutorType.Activate, CardId.Lonefire, Lonefire_activate);
     AddExecutor(ExecutorType.Summon, CardId.AncientCloak);
     AddExecutor(ExecutorType.Activate, CardId.AncientCloak, AncientCloak_act_eff, GY_act_eff);
-    Addexecutor(ExecutorTypeS.Summon Card.Id RaggedGloves);
+    Addexecutor(ExecutorTypeS.Summon, CardId.RaggedGloves);
     AddExecutor(ExecutorType.Activate, CardId.RaggedGloves, GY_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.DarkMagician);
     AddExecutor(ExecutorType.Activate, CardId.RedEyes);
     AddExecutor(ExecutorType.Summon, CardId.Aleister);
     AddExecutor(ExecutorType.Activate, CardId.Alesiter, AleisterEffect);
-    AddExecutor(ExecutorType.Summon, CardId DarlingtonCobra);
+    AddExecutor(ExecutorType.Summon, CardId.DarlingtonCobra);
     AddExecutor(ExecutorType.Activate, CardId.DarlingtonCobra, DarlingtonCobra_activate);
     AddExecutor(ExecutorType.Activate, CardId.Ashblossom, Hand_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.REFusion,  REFusion_activate);
@@ -186,25 +186,30 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     AddExecutor(ExecutorType.Activate, CardId.SuperPoly, Superpoly_activate);
     AddExecutor(ExecutorType.Activate, CardId.PKRankUpMagic, PKRankUpMagic_activate);
     AddExecutor(ExecutorType.Activate, CardId.MagicalMeltdown, MagicalMeltdown_activate);
-    AddExecutor(ExecutorType.Activate, CardId.PKWing, PKWing_Trap_activate, PKWing_GYActivate);
+    AddExecutor(ExecutorType.Activate, CardId.PKWing, PKWing_Trap_activate, MonsterReborneffect);
     AddExecutor(ExecutorType.Activate, CardId.FogBlade, FogBlade_activate, GY_act_eff);
+    AddExecutor(ExecutorType.SPSummon, CardId.Triphy_summon);
     AddExecutor(ExecutorType.Activate, CardId.Triphy, Triphy_activate);
+    AddExecutor(ExecutorType.SPSummon, CardId.Mechaba, Mechaba_summon);
     AddExecutor(ExecutorType.Activate, CardId.Mechaba, Mechaba_activate);
+    AddExecutor(ExecutorType.SPSummon, CardId.Dragoon, Dragoon_summon);
     AddExecutor(ExecutorType.Activate, CardId.Dragoon, Dragoon_Activate);
     AddExecutor(ExecutorType.Activate, CardId.StarvingVenom, StaringVenom_activate);
     AddExecutor(ExecutorType.Activate, CardId.Purgatrio, Purgatrio_activate);
     AddExecutor(ExecutorTpe.SpSummon, CardId.Zeus, Zeus_SPSummon);
     AddExecutor(ExecutorType.Activate, CardId.Zeus, Zeus_activate, Zeus_eff_act);
     AddExecutor(ExecutorType.Activate, CardId.RaidersKnight, RaidersKnight_activate);
-    AddExecutor(ExecutorTpe.SpSummon, CardId.BreakSword, BreakSwordXYZsummon);
+    AddExecutor(ExecutorTpe.SpSummon, CardId.BreakSword, BreakSword_summon);
     AddExecutor(ExecutorType.Activate, CardId.BreakSword, Breaksword_activate, GY_act_eff);
     AddExecutor(ExecutorType.SPSummon, CardId Rusty, RustySummon);
     AddExecutor(ExecutorType.Activate, CardId.Rusty, Rusty_activate, Rusty_act_eff);
     AddExecutor(ExecutorType.SPSummon, CardId.Cherubini, CherubiniSummon);
     AddExecutor(ExecutorType.Activate, CardId.Cherubini, Cherubini_activate, Cherubini_act_eff);
-    AddExecutor(ExecutorTyoe, SpSummon, CardId.Verte, Verte_SPSummon);
+    AddExecutor(ExecutorType, SPSummon, CardId.Verte, Verte_Summon);
     AddExecutor(ExecutorType.Activate, CardId.Verte, Verte_activate);
+    AddExecutor(ExecutorType.SPSummon, CardId.SecureGardna, SecureGardna_Summon);
     AddExecutor(ExecutorType.Activate, CardId.SecureGardna, SecureGardna_activate);
+    AddExecutor(ExecutorType.SPSummon, CardId.Almiraj, Almiraj,summon)
     AddExecutor(ExecutorType.Activate, CardId.Almiraj, Almiraj_activate);
     AddExecutor(ExecutorType.Activate, CardId.Lancea, Hand_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.GateBlocker);
@@ -360,3 +365,9 @@ private bool NormalSummon()
     return true;
 }
 
+private bool TornScales_activate()
+{ 
+if (DynamicCard.Location == CardLocation.MonsterZone)
+    {
+        if (BotHasInHand.Where(x => List.Contains
+    if 
