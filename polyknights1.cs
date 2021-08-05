@@ -366,8 +366,16 @@ private bool NormalSummon()
 }
 
 private bool TornScales_activate()
-{ 
-if (DynamicCard.Location == CardLocation.MonsterZone)
+{
+    if (DynamicCard.Location == CardLocation.MonsterZone) 
     {
-        if (BotHasInHand.Where(x => List.Contains
-    if 
+        if (BotHasInHand.Where(x => array1[]);
+        {
+            return true;
+        }
+
+        if else
+    {
+            return false;
+    }
+       
