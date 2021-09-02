@@ -9,7 +9,6 @@ using System.Linq;
                   "s+Gf02rCtK6mmEVfUokVho3NpZhguE3EnfWM7Fpm0xtnwXjxo2RWGNZc38oIwyuePmOCYakr2nC8XvkeAwjf0o1j+HVHhHHZ7C+MkdXJLLtksliOrrzFonxtLhMMx2beg2PXcjfW/Z3XmUC45uNd1k/7WxlhWGbJIZbYEzUsqwQdmR6fL2FadnY3w3TFFFaBk1eYT2tuZ/x+dw8zCC/0mc74Zl09c8x+Q5azDxQZetVnMK99xMUEw/sWVjPA8N/OOawwrDbBiRmGb0/NZoJhUFgBAA==");
      }
 public class CardId
-private bool TornscalesinGY = false;
 private bool wasTornScalesSummonedThisTurn = false;
 private bool TornscalesHitGY = false;
 private bool RaggedGlovesHitGY = false;
@@ -17,7 +16,7 @@ private bool BootsHitGY = false;
 private bool AncientCloakHitGY = false;
 private bool InvocationHitGY = false;
 private List<int> CombosInHand;
-private bool ROTAinhand = false;
+
 
 {
       //main deck
@@ -71,21 +70,21 @@ private bool ROTAinhand = false;
       public const int DRNM = 54693926
       public const int SolemnStrike = 40605147
      }
-            private readonly List<int> Combo_cards = new List<int>()
-        {
-            CardId.RaggedGloves,
-            CardId.Boots,
-            CardId.AncientGloves,
-            CardId.TornScales,
-            CardId.Alesiter,
-            CardId.Foolish,
-            CardId.ROTA,
-            CardId.lonefire,
-            CardId.Scorpio,
-            CardId.DarlingtonCobra,
-            CardId.StainedGreaves,
+private readonly List<int> Combo_cards = new List<int>()
+ {
+     CardId.RaggedGloves,
+     CardId.Boots,
+     CardId.AncientGloves,
+     CardId.TornScales,
+     CardId.Alesiter,
+     CardId.Foolish,
+     CardId.ROTA,
+     CardId.lonefire,
+     CardId.Scorpio,
+     CardId.DarlingtonCobra,
+     CardId.StainedGreaves,
 
-        };
+ }
 private readonly List<int> normal_counter = new List<int>
         {
             53262004, 98338152, 32617464, 45041488,
@@ -367,15 +366,34 @@ private bool NormalSummon()
 
 private bool TornScales_activate()
 {
-    if (DynamicCard.Location == CardLocation.MonsterZone) 
+    if (DynamicCard.Location == CardLocation.MonsterZone)
     {
-        if (BotHasInHand.Where(x => array1[]);
+        wasTornscalesActivatedThisTurn = true;
+        break;
+    }
+    
+    else
+        if (BotHasInHand.Where(x => PK_combo[]);
+    { 
         {
             return true;
         }
 
-        if else
-    {
+         else
+        {
             return false;
-    }
-       
+        }
+        AI.SelectCard(new List<int>()){
+            CardId.RaggedGloves
+            CardId.AncientCloak
+            CardId.PKWing
+            CardId.Boots
+            CardId.StainedGreaves
+            CardId.FogBlade
+            CardId.TornScales
+
+        })
+
+     }
+}
+
