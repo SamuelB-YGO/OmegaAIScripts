@@ -100,12 +100,6 @@ private readonly List<int> should_not_negate = new List<int>
         {
             81275020, 28985331
         };
-private readonly List<int> PhantomKnight_links = new List<int>
-        {
-            CardId.Rusty,
-            CardId.SecureGardna,
-            CardId.Almiraj
-        };
 private readonly List<int> TornscalesTargets = new List<int>
         {
             CardId.TornScales,
@@ -124,22 +118,6 @@ private readonly List<int> PK_combo = new List<int>
             CardId.BreakSword,
             CardId.RaidersKnight,
             CardId.ArcRebellion
-        };
-private readonly List<int> RustyMaterials = new List<int>
-        {
-            CardId.SecureGardna,
-            CardId.BreakSword,
-            CardId.Tornscales,
-            CardId.RaggedGloves,
-            CardId.Almiraj,
-            CardId.Cherubini,
-            CardId.Lonefire,
-            CardId.StainedGreaves,
-            CardId.DarlingtonCobra,
-            CardId.Almiraj,
-            CardId.Scorpio,
-            CardId.Aleister,
-
         };
 private readonly List<int> PK_spellTrap = new List<int>
         {
