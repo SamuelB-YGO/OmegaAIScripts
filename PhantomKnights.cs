@@ -125,17 +125,21 @@ private bool ScorpioActivatedThisTurn = false;
 
 public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     {
+    AddExecutor(ExecutorType.Summon, CardId.Wheelder);
+    AddExecutor(ExecutorTypeSPSummon, CardId.Wheelder, Wheelder_SPSummon);
     AddExecutor(ExecutorType.Summon, CardId.Tornscales)
     AddExecutor(ExecutorType.Activate, CardId.TornScales, TornScales_activate, GY_act_eff);
-    Addexecutor(ExecutorTyoe.SpSummon, CardId.Boots, BootsSummon);
+    Addexecutor(ExecutorTyoe.SpSummon, CardId.Boots, Boots_SPSummon);
     AddExecutor(ExecutorType.Activate, CardId.Boots, GY_act_eff);
-    AddExecutor(ExecutorType.SPSummon, CardId.StainedGreaves. StainedGreavesSummon);
+    AddExecutor(ExecutorType.Summon, CardId.Boots)
+    AddExecutor(ExecutorType.Summon, CardId.StainedGreaves);
+    AddExecutor(ExecutorType.Activate CardId.StainedGreaves, GY_act_eff);
     AddExecutor(ExecutorType.Summon, CardId.AncientCloak);
-    AddExecutor(ExecutorType.Activate, CardId.AncientCloak, AncientCloak_act_eff, GY_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.AncientCloak, GY_act_eff);
     Addexecutor(ExecutorType.Summon, CardId.RaggedGloves);
     AddExecutor(ExecutorType.Activate, CardId.RaggedGloves, GY_act_eff);
-    AddExecutor(ExecutorType.Activate, CardId.DarkMagician);
-    AddExecutor(ExecutorType.Activate, CardId.RedEyes);
+    AddExecutor(ExecutorType.Summon, CardId.DarkMagician);
+    AddExecutor(ExecutorType.Summon, CardId.RedEyes);
     AddExecutor(ExecutorType.Activate, CardId.Ashblossom, Hand_act_eff);
     AddExecutor(ExecutorType.Activate, CardId.REFusion,  REFusion_activate);
     AddExecutor(ExecutorType.Activate, CardId.FeatherDuster, HarpieFeatherDuster);
@@ -149,9 +153,11 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     AddExecutor(ExecutorType.SPSummon, CardId.Triphy_summon);
     AddExecutor(ExecutorType.SPSummon, CardId.Dragoon, Dragoon_summon);
     AddExecutor(ExecutorType.Activate, CardId.Dragoon, Dragoon_Activate);
+    AddExecutor(ExecutorType.SPSummon, CardId StarvingVenom);
     AddExecutor(ExecutorType.Activate, CardId.StarvingVenom, StaringVenom_activate);
     AddExecutor(ExecutorTpe.SPSummon, CardId.Zeus, Zeus_SPSummon);
     AddExecutor(ExecutorType.Activate, CardId.Zeus, Zeus_activate, Zeus_eff_act);
+    AddExecutor(ExecutorType.SPSummon, CardId.RaidersKnight_SPSummon)
     AddExecutor(ExecutorType.Activate, CardId.RaidersKnight, RaidersKnight_activate);
     AddExecutor(ExecutorTpe.SPSummon, CardId.BreakSword, BreakSword_summon);
     AddExecutor(ExecutorType.Activate, CardId.BreakSword, Breaksword_activate, GY_act_eff);
@@ -237,20 +243,46 @@ private bool TornScales_activate()
 
      }
 }
-private bool Tornscales GY_act-eff()
+private bool Tornscales GY_act_eff()
  {
-    { if (DynamicCard.Location == Cardlocatiom.Gravyard) && if (Bot.HasInGraveyard(new[] {
+    { if (DynamicCard.Location == Cardlocation.Graveyard) && if (Bot.HasInGraveyard(new[] {
                 CardId.AncientCloak,
                 CardId.RaggedGloves,
                 CardId.Tornscales,
                 CardId.StainedGreaves,
+                CardId.Boots,
 
             }))
         {
             return true;
         }
-        {else
-                return false;
+        
+        
+       else
+        {
+            return false;
+        }
+    }
+}
+
+private bool Fogblade GY_act_eff()
+ {
+    {
+        if (DynamicCard.Location == Cardlocation.Graveyard) && if (Bot.HasInGraveyard(new[] {
+                CardId.AncientCloak,
+                CardId.RaggedGloves,
+                CardId.Tornscales,
+                CardId.StainedGreaves,
+                CardId.Boots,
+
+            }))
+        {
+            return true;
+        }
+        
+        else
+        {
+            return false;
         }
     }
 }
