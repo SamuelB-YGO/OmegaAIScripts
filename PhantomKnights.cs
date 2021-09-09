@@ -45,6 +45,8 @@ private List<int> CombosInHand;
     //traps
       public const int PKWing = 98431356
       public const int FogBlade = 25542642
+      public const int PKsword = 61936647
+      public const int SolemnStrike = 40605147
             //Extra Deck Monsters
       public const int Triphy = 79864860
       public const int Dragoon = 37818794
@@ -63,7 +65,7 @@ private List<int> CombosInHand;
       public const int GateBlocker = 8102334
       public const int IDP = 20899496
       public const int TTT = 25311006
-      public const int SolemnStrike = 40605147
+      public const int Nibiru = 27204311
      }
 private readonly List<int> Combo_cards = new List<int>()
  {
@@ -71,12 +73,8 @@ private readonly List<int> Combo_cards = new List<int>()
      CardId.Boots,
      CardId.AncientGloves,
      CardId.TornScales,
-     CardId.Alesiter,
      CardId.Foolish,
      CardId.ROTA,
-     CardId.lonefire,
-     CardId.Scorpio,
-     CardId.DarlingtonCobra,
      CardId.StainedGreaves,
 
  }
@@ -111,13 +109,12 @@ private readonly List<int> PK_combo = new List<int>
             CardId.StainedGreaves,
             CardId.FogBlade,
             CardId.BreakSword,
-            CardId.RaidersKnight,
-            CardId.ArcRebellion
         };
 private readonly List<int> PK_spellTrap = new List<int>
         {
             CardId.FogBlade,
-            CardId.PKRankUpMagic,
+            CardId.PKRankUpMagicForce,
+            CardId.PKRankUpMagicLaunch,
             CardId.MagicalMeltdown,
             
         };
@@ -161,7 +158,7 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     AddExecutor(ExecutorType.SPSummon, CardId Rusty, RustySummon);
     AddExecutor(ExecutorType.Activate, CardId.Rusty, Rusty_activate, Rusty_act_eff);
     AddExecutor(ExecutorType.SPSummon, CardId.Cherubini, CherubiniSummon);
-    AddExecutor(ExecutorType.Activate, CardId.Cherubini, Cherubini_activate, Cherubini_act_eff);
+    AddExecutor(ExecutorType.Activate, CardId.Cherubini, Cherubini_activate);
     AddExecutor(ExecutorType, SPSummon, CardId.Verte, Verte_Summon);
     AddExecutor(ExecutorType.Activate, CardId.Verte, Verte_activate);
     AddExecutor(ExecutorType.SPSummon, CardId.Almiraj, Almiraj,summon)
@@ -173,7 +170,7 @@ public PolyKnightsExecutor(GameAI ai, BotDuel duel) : base(ai, duel)
     AddExecutor(ExecutorType.SPSummon, CardId.Nibiru, Niburu_activate)
     AddExecutor(ExecutorType.Activate, CardId.Lancea, SPSummon);
     AddExecutor(ExecutorType.Activate, CardId.GateBlocker);
-    AddExecutor(ExecutorType.Activate, CardId.DRNM, DRNM-activate);
+    AddExecutor(ExecutorType.Activate, CardId.IDP, IDP-activate);
     AddExecutor(ExecutorType.Activate, CardId.SolemStrike, solemnStrike_activate);
 
     AddExecutor(ExecutorType.Repos, DefaultMonsterRepos);
@@ -188,119 +185,6 @@ public override bool OnSelectHand()
 
 }
 
-public override bool OnPreBattleBetween(BotClientCard attacker, BotClientCard defender)
-{
-    if (!defender.IsMonsterHasPreventActivationEffectInBattle())
-    {
-        if (attacker.HasType(CardType.Fusion) && Bot.HasInHand(CardId.Aleister))
-        {
-            attacker.RealPower = attacker.RealPower + 1000;
-        }
-    }
-    return base.OnPreBattleBetween(attacker, defender);
-
-    private bool AleisterEffect()
-    {
-        if (DynamicCard.Location == CardLocation.Hand)
-        {
-            if (!(BotDuel.Phase == DuelPhase.BattleStep
-                || BotDuel.Phase == DuelPhase.BattleStart
-                || BotDuel.Phase == DuelPhase.Damage))
-            {
-                return false;
-            }
-
-            return BotDuel.Player == 0
-                || Util.IsOneEnemyBetter();
-        }
-        return true;
-    }
-
-    private bool InvocationEffect()
-    {
-        if (DynamicCard.Location == CardLocation.Grave)
-        {
-            return true;
-        }
-
-        IList<BotClientCard> materials0 = Bot.Graveyard;
-        IList<BotClientCard> materials1 = Enemy.Graveyard;
-        IList<BotClientCard> mats = new List<BotClientCard>();
-        BotClientCard aleister = GetAleisterInGrave();
-        if (aleister != null)
-        {
-            mats.Add(aleister);
-        }
-        BotClientCard mat = null;
-        foreach (BotClientCard card in materials0)
-        {
-            if (card.HasAttribute(CardAttribute.Light))
-            {
-                mat = card;
-                break;
-            }
-        }
-        foreach (BotClientCard card in materials1)
-        {
-            if (card.HasAttribute(CardAttribute.Light))
-            {
-                mat = card;
-                break;
-            }
-        }
-        if (mat != null)
-        {
-            mats.Add(mat);
-            AI.SelectCard(CardId.Mechaba);
-            AI.SelectMaterials(mats);
-            AI.SelectPosition(CardPosition.FaceUpAttack);
-            return true;
-        }
-        foreach (BotClientCard card in materials0)
-        {
-            if (card.HasAttribute(CardAttribute.Fire))
-            {
-                mat = card;
-                break;
-            }
-        }
-        foreach (BotClientCard card in materials1)
-        {
-            if (card.HasAttribute(CardAttribute.Fire))
-            {
-                mat = card;
-                break;
-            }
-        }
-        if (mat != null)
-        {
-            mats.Add(mat);
-            AI.SelectCard(CardId.Purgatrio);
-            AI.SelectMaterials(mats);
-            AI.SelectPosition(CardPosition.FaceUpAttack);
-            return true;
-        }
-        return false;
-    }
-
-    private BotClientCard GetAleisterInGrave()
-    {
-        foreach (BotClientCard card in Enemy.Graveyard)
-        {
-            if (card.IsCode(CardId.Aleister))
-            {
-                return card;
-            }
-        }
-        foreach (BotClientCard card in Bot.Graveyard)
-        {
-            if (card.IsCode(CardId.Aleister))
-            {
-                return card;
-            }
-        }
-        return null;
-    }
 
 
 public override IList<BotClientCard> OnSelectXyzMaterial(IList<BotClientCard> cards, int min, int max)
@@ -309,10 +193,7 @@ public override IList<BotClientCard> OnSelectXyzMaterial(IList<BotClientCard> ca
         CardId.Tornscales,
         CardId.RaggedGloves,
         CardId.AncientCloak,
-        CardId.Scorpio,
-        CardId.DarlingtonCobra,
         CardId.StainedGreaves,
-        CardId.Lonefire,
         CardId.Ashblossom,
     }, cards, min, max);
     return Util.CheckSelectCount(result, cards, min, max);
@@ -355,5 +236,22 @@ private bool TornScales_activate()
         })
 
      }
+}
+private bool Tornscales GY_act-eff()
+ {
+    { if (DynamicCard.Location == Cardlocatiom.Gravyard) && if (Bot.HasInGraveyard(new[] {
+                CardId.AncientCloak,
+                CardId.RaggedGloves,
+                CardId.Tornscales,
+                CardId.StainedGreaves,
+
+            }))
+        {
+            return true;
+        }
+        {else
+                return false;
+        }
+    }
 }
 
