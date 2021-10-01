@@ -44,22 +44,24 @@ namespace DuelBot.Game.AI.Decks
         public PhotonFlashExecutor(GameAI ai, BotDuel duel)
             : base(ai, duel)
             {
-                AddExecutor(ExecutorType.Activate, CardId.PhotonVanisher/*,PhotonVanisherEff*/);
-                AddExecutor(ExecutorType.SpSummon, CardId.StarligeLordGalaxion);
-                AddExecutor(ExecutorType.Activate, CardId.StarligeLordGalaxion,StarligeLordGalaxionEff);
-                AddExecutor(ExecutorType.Activate, CardId.PhotonLizard,PhotonLizardEff);
-                AddExecutor(ExecutorType.SpSummon, CardId.PhotonThrasher,PhotonThrasherSpSummon);
-                AddExecutor(ExecutorType.SpSummon, CardId.PhotonVanisher,PhotonVanisherSpSummon);
+                AddExecutor(ExecutorType.Activate, CardId.PhotonVanisher, PhotonVanisher_eff);
+                AddExecutor(ExecutorType.SpSummon, CardId.StarligeLordGalaxion, StarliegeLordGalaxion_XYZ_Summon);
+                AddExecutor(ExecutorType.Activate, CardId.StarligeLordGalaxion,StarligeLordGalaxion_Eff1);
+                AddExecutor(ExecutorType.Activate, CardId.StarligeLordGalaxion, StarligeLordGalaxion_Eff2);
+                AddExecutor(ExecutorType.SpSummon, CardId.PhotonThrasher,PhotonThrasher_SpSummon);
+                AddExecutor(ExecutorType.SpSummon, CardId.PhotonVanisher,PhotonVanisher_SpSummon);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonLizard);
-                AddExecutor(ExecutorType.SpSummon, CardId.PhotonAdvancer,PhotonAdvancerSpSummon);
-                AddExecutor(ExecutorType.Activate, CardId.PhotonLead,LeadEff);
+                AddExecutor(ExecutorType.Activate, CardId.PhotonLizard, PhotonLizard_Eff);
+                AddExecutor(ExecutorType.Summon, CardId.PhotonAdvancer, PhotonAdvancer_Summon)
+                AddExecutor(ExecutorType.SpSummon, CardId.PhotonAdvancer, PhotonAdvancer_SpSummon);
+                AddExecutor(ExecutorType.Activate, CardId.PhotonLead, Lead_Eff);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonSabreTiger);
                 AddExecutor(ExecutorType.Activate, CardId.PhotonSabreTiger/*,PhotonSabreTigerEff*/);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonCrusher);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonChargeman);
                 AddExecutor(ExecutorType.SpSummon, CardId.Numbers20);
                 AddExecutor(ExecutorType.SpSummon ,CardId.StarligePaladynamo);
-                AddExecutor(ExecutorType.Activate, CardId.StarligePaladynamo,StarligePaladynamoEff)
+                AddExecutor(ExecutorType.Activate, CardId.StarligePaladynamo,StarligePaladynamo_Eff)
                 AddExecutor(ExecutorType.Summon, CardId.PhotonAdvancer);
                 AddExecutor(ExecutorType.SpSummon, CardId.PhotonDragon,);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonDragon,);
@@ -69,27 +71,84 @@ namespace DuelBot.Game.AI.Decks
                 AddExecutor(ExecutorType.Activate, CardId.Numbers20);
                 AddExecutor(ExecutorType.Activate, CardId.MysticalSpaceTyphoon,DefaultMysticalSpaceTyphoon);
             }
-        //default state for 1 per turn effects
+        //resets on new turn
         public override void OnNewTurn()
         {
-            bool usedLizardEff = false;
-            bool usedNumbers20Eff = false;
-            bool usedGalaxionEff = false;
+            bool LizardEffUsed = false;
+            bool Numbers20EffUsed = false;
+            bool GalaxionEffUsed = false;
+       
         }
-        
-        private bool PhotonThrasherSpSummon ()
+        private readonly int[] Level_4s = new[]
         {
-            foreach ( ClientCard card in Bot . Hand . GetMonsters ())
-            {
-                if (!card.Equals(DynamicCard) && card.Level == 4)
-                    return true;
-            }
-            return false;
+            CardId.PhotonVanisher,
+            CardId.PhotonThrasher,
+            CardId.PhotonChargeman,
+            CardId.PhotonAdvancer
+
         }
+ 
+        private bool PhotonThrasherSummonFirst()
+        {
+
+            if (Bot.HasInHand(Level_4s))
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
+
+            private bool PhotonThrasherSpSummon()
+        {
+            if (Bot.GetMonsterCount() == 0 && PhotonThrasherSummonFirst() && !Bot.HasInHand(Level_4s))
+            {
+              
+                return true;
+
+            }
+           
+                else
+            
+                {
+                return false;
+                
+                }
+
+        }
+     
+         private bool PhotonVanisherSpSummon()
+            {   
+                if (Bot.HasInHand (CardId.PhotonVanisher)) && (!Bot.HasInMonsterZones(new {
+                    CardId.PhotonAdvancer,
+                    CardId.PhotonChargeman,
+                    CardId.PhotonCrusher,
+                    CardId.PhotonDragon,
+                    CardId.PhotonLizard,
+                    CardId.PhotonPirate,
+                    CardId.PhotonSabreTiger,
+                    CardId.PhotonThrasher,
+                    CardId.PhotonVanisher
+                }))
+
+                {
+                    return
+                          true;
+                }
+
+                else
+                {
+                    return
+                        false;
+                }
          
-         private bool StarligeLordGalaxionEff ()
+        
+        
+        private bool StarligeLordGalaxionEff ()
          {
-             if ( Bot . HasInHand (CardId . PhotonDragon ))
+             if ( Bot.HasInHand(CardId.PhotonDragon ))
              {
                  return true;
              }
