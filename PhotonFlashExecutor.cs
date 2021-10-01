@@ -57,7 +57,7 @@ namespace DuelBot.Game.AI.Decks
             AddExecutor(ExecutorType.SpSummon, CardId.PhotonAdvancer, PhotonAdvancer_SpSummon);
             AddExecutor(ExecutorType.Activate, CardId.PhotonLead, Lead_Eff);
             AddExecutor(ExecutorType.Summon, CardId.PhotonSabreTiger);
-            AddExecutor(ExecutorType.Activate, CardId.PhotonSabreTiger/*,PhotonSabreTigerEff*/);
+            AddExecutor(ExecutorType.Activate, CardId.PhotonSabreTiger, PhotonSabreTiger_Eff);
             AddExecutor(ExecutorType.Summon, CardId.PhotonCrusher);
             AddExecutor(ExecutorType.Summon, CardId.PhotonChargeman);
             AddExecutor(ExecutorType.SpSummon, CardId.Numbers20);
@@ -137,14 +137,12 @@ namespace DuelBot.Game.AI.Decks
                 }))
 
                 {
-                return
-                      true;
+                return true;
             }
 
                 else
             {
-                return
-                    false;
+                return false;
             }
 
             private bool PhotonAdvancer_SpSummon()
@@ -162,13 +160,11 @@ namespace DuelBot.Game.AI.Decks
                     CardId.PhotonVanisher
                 }))
                  {
-                return
-                    true;
+                return true;
             }
             else
             {
-                return
-                    false;
+                return false;
             }
             private bool PhotonVanisher_Eff()
             {
@@ -177,8 +173,7 @@ namespace DuelBot.Game.AI.Decks
                     wasPhotonVanisherSummonedThisTurn = true;
                 }
                 { 
-                    return
-                        true;
+                    return true;
                 }
 
                 
@@ -196,8 +191,7 @@ namespace DuelBot.Game.AI.Decks
             {
                 if (!Bot.HasInHand(CardId.PhotonThrasher))
                 {
-                    return
-                        true;
+                    return true;
                 }
 
                 AI.SelectCard(CardId.PhotonAdvancer);
@@ -207,67 +201,61 @@ namespace DuelBot.Game.AI.Decks
             else
                 { if (Bot.HasInHand(CardId.PhotonAdvancer))
                     {
-                        return
-                                    true;
+                        return true;
                     }
 
                     AI.SelectCard(CardId.PhotonThrasher);
                 else
                     {
-                        return
-                              false;
+                        return false;
                     }
                 }
 
             }
 
+            private bool PhotonSabreTiger_Eff()
+            { 
+                wasPhotonSabreTigerSummonedThisTurn = true;
+                if(Bot.HasInHandOrInMonsterZonesOrInGraveyard int[] = new[]
+                {
+                    CardId.PhotonAdvancer,
+                    CardId.PhotonChargeman,
+                    CardId.PhotonCrusher,
+                    CardId.PhotonDragon,
+                    CardId.PhotonLizard,
+                    CardId.PhotonPirate,
+                    CardId.PhotonSabreTiger,
+                    CardId.PhotonThrasher,
+                    CardId.PhotonVanisher
+                }))
+            {
+                return true;
+            }        
 
-            private bool StarligeLordGalaxionEff()
+            AI.SelectCard(CardId.PhotonSaberTiger)
+            else
+            {
+                return false;
+            }
+
+                private bool StarligeLordGalaxion_Eff()
             {
                 if (Bot.HasInHand(CardId.PhotonDragon))
                 {
                     return true;
                 }
-                else
+                AI.SpSummonCard(CardId.PhotonDragon)
+                
+                    else
                 {
-                    //Detach 2 effect what goes here?
-                    return false
+                    return false;
+                    
                 }
+                AI.SelectCard(CardId.PhotonDragon)
             }
 
-            private bool PhotonVanisherSpSummon()
-            {
-                foreach (BotClientCard monster in Bot.GetMonsters())
-                {
-                    if (monster.Level == 4)
-                    {
-                        return true;
-                    }
-                    return false;
-                }
-
-                private bool LeadEff()
-                {
-                    foreach (ClientCard card in Bot.Hand.GetMonsters())
-                        if (card.Level == 4)
-                        {
-                            return true;
-                        }
-                    return false;
-                }
-
-                private bool PhotonAdvancerSpSummon()
-                {
-                    foreach (ClientCard card in Bot.Hand.GetMonsters())
-                    {
-                        if (!card.Equals(DynamicCard) && card.Level == 4)
-                        {
-                            return true;
-                        }
-                        return false;
-                    }
-
-                    private bool PhotonStreamofDestructionEff()
+           
+            private bool PhotonStreamofDestructionEff()
                     {
                         BotClientCard target = Util.GetProblematicEnemyCard():
                      
@@ -276,7 +264,10 @@ namespace DuelBot.Game.AI.Decks
                 AI.SelectCard(target);
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
         private bool StarligePaladynamoEff()
         {
@@ -284,10 +275,13 @@ namespace DuelBot.Game.AI.Decks
                       
                      if (!target = null)
             {
-                AI.SelectCard(target);
                 return true;
             }
-            return false;
+                AI.SelectCard(target);
+            else
+            {
+                return false;
+            }
         }
     }
 }
