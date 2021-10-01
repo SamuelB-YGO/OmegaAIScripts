@@ -1,4 +1,6 @@
 using Enumerator;
+using System.Collections.Generic;
+using System.Linq;
 namespace DuelBot.Game.AI.Decks
 {
     public class PhotonFlashExecutor :  DefaultExecutor
@@ -43,23 +45,23 @@ namespace DuelBot.Game.AI.Decks
             : base(ai, duel)
             {
                 AddExecutor(ExecutorType.Activate, CardId.PhotonVanisher/*,PhotonVanisherEff*/);
-                AddExecutor(ExecutorType.spSummon, CardId.StarligeLordGalaxion);
+                AddExecutor(ExecutorType.SpSummon, CardId.StarligeLordGalaxion);
                 AddExecutor(ExecutorType.Activate, CardId.StarligeLordGalaxion,StarligeLordGalaxionEff);
                 AddExecutor(ExecutorType.Activate, CardId.PhotonLizard,PhotonLizardEff);
-                AddExecutor(ExecutorType.spSummon ,CardId.PhotonThrasher,PhotonThrasherSpSummon);
-                AddExecutor(ExecutorType.spSummon ,CardId.PhotonVanisher,PhotonVanisherSpSummon);
+                AddExecutor(ExecutorType.SpSummon, CardId.PhotonThrasher,PhotonThrasherSpSummon);
+                AddExecutor(ExecutorType.SpSummon, CardId.PhotonVanisher,PhotonVanisherSpSummon);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonLizard);
-                AddExecutor(ExecutorType.spSummon, CardId.PhotonAdvancer,PhotonAdvancerSpSummon);
+                AddExecutor(ExecutorType.SpSummon, CardId.PhotonAdvancer,PhotonAdvancerSpSummon);
                 AddExecutor(ExecutorType.Activate, CardId.PhotonLead,LeadEff);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonSabreTiger);
                 AddExecutor(ExecutorType.Activate, CardId.PhotonSabreTiger/*,PhotonSabreTigerEff*/);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonCrusher);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonChargeman);
-                AddExecutor(ExecutorType.spSummon, CardId.Numbers20);
-                AddExecutor(ExecutorType.spSummon ,CardId.StarligePaladynamo);
+                AddExecutor(ExecutorType.SpSummon, CardId.Numbers20);
+                AddExecutor(ExecutorType.SpSummon ,CardId.StarligePaladynamo);
                 AddExecutor(ExecutorType.Activate, CardId.StarligePaladynamo,StarligePaladynamoEff)
                 AddExecutor(ExecutorType.Summon, CardId.PhotonAdvancer);
-                AddExecutor(ExecutorType.spSummon, CardId.PhotonDragon,);
+                AddExecutor(ExecutorType.SpSummon, CardId.PhotonDragon,);
                 AddExecutor(ExecutorType.Summon, CardId.PhotonDragon,);
                 AddExecutor(ExecutorType.Activate, CardId.PhotonTrident/*,PhotonTridentEff*/);
                 AddExecutor(ExecutorType.Activate, CardId.PhotonBooster,PhotonBoosterEff);
@@ -67,10 +69,13 @@ namespace DuelBot.Game.AI.Decks
                 AddExecutor(ExecutorType.Activate, CardId.Numbers20);
                 AddExecutor(ExecutorType.Activate, CardId.MysticalSpaceTyphoon,DefaultMysticalSpaceTyphoon);
             }
-            //default state for 1 per turn effects
-        bool usedLizardEff = false;
-        bool usedNumbers20Eff = false;
-        bool usedGalaxionEff = false;
+        //default state for 1 per turn effects
+        public override void OnNewTurn()
+        {
+            bool usedLizardEff = false;
+            bool usedNumbers20Eff = false;
+            bool usedGalaxionEff = false;
+        }
         
         private bool PhotonThrasherSpSummon ()
         {
