@@ -74,7 +74,6 @@ private readonly List<int> Combo_cards = new List<int>()
      CardId.AncientGloves,
      CardId.TornScales,
      CardId.Foolish,
-     CardId.ROTA,
      CardId.StainedGreaves,
 
  }
@@ -104,13 +103,13 @@ private readonly int[] PK_combo = new[]
             CardId.FogBlade,
             CardId.BreakSword,
         };
-private readonly int[] = PK_Spell_Trap = new[] 
+private readonly int[] = PK_Spell_Trap = new[]
         {
             CardId.FogBlade,
             CardId.PKRankUpMagicForce,
             CardId.PKRankUpMagicLaunch,
             CardId.MagicalMeltdown,
-            
+
         };
 private bool TornScalesUsedThisTurn = false;
 private bool wasBootsActivatedThisTurn = false;
